@@ -3,13 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario </title>
-
     <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <script src="/assets/js/jquery/dist/jquery.js"></script>
-    <script src="/assets/js/bootstrap.js"></script>
 
 </head>
 
@@ -18,13 +14,14 @@
     <div class="container p-4 text-center">
         <h1>Inventario EMMSA</h1>
         <button class="btn btn-primary" id="btnAddProduct">Añadir producto</button>
+        <a href="/contact" class="btn btn-primary">Contacto</a>
 
         <table class="table table-striped" id="mytable">
             <thead>
                 <th> Id </th>
                 <th> Producto </th>
                 <th> Descripcion </th>
-                <th> Precio </th>
+                <th> Cantidad </th>
                 <th> Tarea </th>
             </thead>
             <tbody>
@@ -33,16 +30,15 @@
                     <td> {{ producto_id }}</td>
                     <td> {{ producto_nombre }}</td>
                     <td> {{ producto_descripcion }}</td>
-                    <td> {{ producto_precio }}</td>
+                    <td> {{ producto_cantidad }}</td>
 
                     <td><a href="javascript:void(0);" class="btn btn-info edit" data-id="{{ producto_id}}"
                             data-producto_nombre="{{ producto_nombre }}"
-                            data-producto-descripcion="{{ producto_descripcion }}"
-                            data-producto_precio="{{ producto_precio }}"> Editar</a>
+                            data-producto_descripcion="{{ producto_descripcion }}"
+                            data-producto_cantidad="{{ producto_cantidad }}">Editar </a>
                         <a href="javascript:void(0);" class="btn btn-danger delete" data-producto_id="{{producto_id}}">
-                            Borrar</a>
+                            Eliminar </a>
                     </td>
-
                 </tr>
 
                 {{/each}}
@@ -53,39 +49,37 @@
 
 
 
-    {{!-- Modal alta producto --}}
+    {{!-- Alta producto --}}
     <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProductModalLabel">Alta producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="addProductModalLabel">Alta producto </h5>
                 </div>
+
                 <div class="modal-body">
 
                     {{!-- Form alta producto --}}
                     <form id="addProductForm" action="/save" method="post">
                         <div class="form-group">
-                            <label for="producto_nombre">Nombre del producto</label>
+                            <label for="producto_nombre">Nombre del producto </label>
                             <input type="text" class="form-control" id="producto_nombre" name="producto_nombre"
                                 required>
                         </div>
 
                         <div class="form-group">
-                            <label for="producto_descripcion">Descripcion del producto</label>
-                            <input type="text" class="form-control" id="producto_descripcion" name="producto_descripcion"
-                                required>
+                            <label for="producto_descripcion">Descripcion del producto </label>
+                            <input type="text" class="form-control" id="producto_descripcion"
+                                name="producto_descripcion" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="producto_precio">Precio del producto</label>
-                            <input type="text" class="form-control" id="producto_precio" name="producto_precio"
+                            <label for="producto_cantidad">Unidades </label>
+                            <input type="text" class="form-control" id="producto_cantidad" name="producto_cantidad"
                                 required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar </button>
                     </form>
                 </div>
             </div>
@@ -93,118 +87,105 @@
     </div>
 
 
-    {{!-- EDITAR--}}
+    {{!-- Editar producto--}}
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="editModalLabel">Editar Producto</h3>
+                </div>
 
-    <form action="/update" method="post">
-        <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" id="exampleModalLabel">Editar Producto</h3>
-
-                    </div>
-
-                    <div class="modal-body">
+                <div class="modal-body">
+                    <form action="/update" method="post">
                         <div class="form-group">
-                            <h7 class="modal-title" id="exampleModalLabel">Nombre </h7>
+                            <h7 class="modal-title" id="editModalLabel">Nombre </h7>
                             <input type="text" name="producto_nombre" class="form-control producto_nombre"
                                 placeholder="Nombre" required>
                         </div>
 
                         <div class="form-group">
-                            <h7 class="modal-title" id="exampleModalLabel">Descripcion </h7>
-                            <input type="text" name="producto_descripcion" class="form-control descripcion"
-                                placeholder="Descripcion" required>
+                            <h7 class="modal-title" id="editModalLabel">Descripcion </h7>
+                            <input type="text" name="producto_descripcion" class="form-control producto_descripcion"
+                                placeholder="Descripcion">
                         </div>
 
                         <div class="form-group">
-                            <h7 class="modal-title" id="exampleModalLabel">Precio </h7>
-                            <input type="text" name="producto_precio" class="form-control precio" placeholder="Precio"
-                                required>
+                            <h7 class="modal-title" id="editModalLabel">Unidades </h7>
+                            <input type="text" name="producto_cantidad" class="form-control producto_cantidad"
+                                placeholder="Unidades" required>
                         </div>
-                    </div>
 
-                    <div class="modal-footer">
-                        <input type="hidden" name="id" class="producto_id">
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
-                    </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="id" class="producto_id">
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 
 
 
 
-    {{!-- Modal delete --}}
+    {{!-- Eliminar producto --}}
+    <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Eliminar Producto</h5>
+                </div>
 
-    <form id="delete-form" action="/delete" method="post">
-        <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Borrar Producto</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <strong>¿Estás seguro de borrar este producto? Se vera reflejado en la base de datos. </strong>
-                    </div>
-                    <div class="modal-footer">
+                <div class="modal-body">
+                    <form id="delete-form" action="/delete" method="post">
+                        <strong>¿Estás seguro de eliminar este producto? Se verá reflejado en la base de datos.</strong>
                         <input type="hidden" name="producto_id" id="delete-producto-id">
-
-                        <button type="button" class="close" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 
-
-
+    <script src="/assets/js/jquery/dist/jquery.js"></script>
+    <script src="/assets/js/bootstrap.js"></script>
 
     <script>
-
-
         $(document).ready(function () {
+
             $('#btnAddProduct').click(function () {
                 $('#addProductModal').modal('show');
             });
 
-            $('#EditModal').on('click', '.close-edit-modal', function () {
-                $('#EditModal').modal('hide');
+            $('#btnEdit').click(function () {
+                $('#editModal').modal('show');
             });
-
 
             $('#mytable').on('click', '.edit', function () {
                 let producto_id = $(this).data('id');
                 let producto_nombre = $(this).data('producto_nombre');
                 let producto_descripcion = $(this).data('producto_descripcion');
-                let producto_precio = $(this).data('producto_precio');
-                $('#EditModal').modal('show');
+                let producto_cantidad = $(this).data('producto_cantidad');
+
+                $('#editModal').modal('show');
                 $('.producto_nombre').val(producto_nombre);
                 $('.producto_descripcion').val(producto_descripcion);
-                $('.precio').val(producto_precio);
+                $('.producto_cantidad').val(producto_cantidad);
                 $('.producto_id').val(producto_id);
             });
-
-
 
             $('#mytable').on('click', '.delete', function () {
                 let producto_id = $(this).data('producto_id');
                 $('#delete-producto-id').val(producto_id);
                 $('#DeleteModal').modal('show');
-
             });
         });
 
-
     </script>
-
-
 
 </body>
 

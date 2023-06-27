@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de envío</title>
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+    
+    <div class="container">
+        {{#if success}}
+        <h3>Gracias por su consulta, responderemos a la brevedad</h3>
+        {{else}}
+        <h3>Error al enviar el correo electrónico</h3>
+        {{/if}}
+        <a href="/" class="btn btn-primary">Volver al inicio</a>
+    </div>
+</body>
+
+</html>

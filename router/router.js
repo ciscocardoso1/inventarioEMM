@@ -4,12 +4,12 @@ const mysql = require('mysql');
 
 
 
-// Conexión a base de datos
+/* Conexion BDD */
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'inventarioEmm'
+    database: 'inventarioemm'
 })
 
 conn.connect((err) => {
@@ -18,10 +18,8 @@ conn.connect((err) => {
 });
 
 
-//RUTAS
 
-
-// SELECT 
+/* Rutas */
 router.get('/', (req, res) => {
     let sql = "SELECT * FROM producto";
     conn.query(sql, (err, results) => {
@@ -32,9 +30,9 @@ router.get('/', (req, res) => {
     });
 });
 
-/* maneja solicitud post para guardar un nuevo producto en la bd, utilizando los datos enviados en el body */
+/* Alta producto */
 router.post('/save', (req, res) => {
-    let data = { producto_nombre: req.body.producto_nombre, producto_descripcion: req.body.producto_descripcion, producto_precio: req.body.producto_precio };
+    let data = { producto_nombre: req.body.producto_nombre, producto_descripcion: req.body.producto_descripcion, producto_cantidad: req.body.producto_cantidad };
     let sql = "INSERT INTO producto SET ?";
     conn.query(sql, data, (err, results) => {
         if (err) throw err;
@@ -43,23 +41,28 @@ router.post('/save', (req, res) => {
 });
 
 
-//UPDATE
+/* Editar producto */
 router.post('/update', (req, res) => {
-    let sql = "UPDATE producto SET producto_nombre='" + req.body.producto_nombre + "', producto_descripcion='" + req.body.producto_descripcion + "', producto_precio='" + req.body.producto_precio + "' WHERE producto_id=" + req.body.id;
+    let sql = "UPDATE producto SET producto_nombre='" + req.body.producto_nombre + "', producto_descripcion='" + req.body.producto_descripcion + "', producto_cantidad='" + req.body.producto_cantidad + "' WHERE producto_id=" + req.body.id;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.redirect('/');
     });
 });
- 
- // DELETE
+
+/* Eliminar producto*/
 router.post('/delete', (req, res) => {
     let sql = "DELETE FROM producto WHERE producto_id=" + req.body.producto_id + "";
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.redirect('/');
     });
-}); 
+});
+
+/* Confirmacion formulario */
+router.get('/confirmacion', (req, res) => {
+    res.render('formulario');
+});
 
 
 
